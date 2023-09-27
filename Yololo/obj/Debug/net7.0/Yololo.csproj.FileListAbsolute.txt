@@ -1,0 +1,12 @@
+C:\Users\af40\Desktop\sharp\Yololo\bin\Debug\net7.0\Yololo.deps.json
+C:\Users\af40\Desktop\sharp\Yololo\bin\Debug\net7.0\Yololo.dll
+C:\Users\af40\Desktop\sharp\Yololo\bin\Debug\net7.0\Yololo.pdb
+C:\Users\af40\Desktop\sharp\Yololo\obj\Debug\net7.0\Yololo.csproj.AssemblyReference.cache
+C:\Users\af40\Desktop\sharp\Yololo\obj\Debug\net7.0\Yololo.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\af40\Desktop\sharp\Yololo\obj\Debug\net7.0\Yololo.AssemblyInfoInputs.cache
+C:\Users\af40\Desktop\sharp\Yololo\obj\Debug\net7.0\Yololo.AssemblyInfo.cs
+C:\Users\af40\Desktop\sharp\Yololo\obj\Debug\net7.0\Yololo.csproj.CoreCompileInputs.cache
+C:\Users\af40\Desktop\sharp\Yololo\obj\Debug\net7.0\Yololo.dll
+C:\Users\af40\Desktop\sharp\Yololo\obj\Debug\net7.0\refint\Yololo.dll
+C:\Users\af40\Desktop\sharp\Yololo\obj\Debug\net7.0\Yololo.pdb
+C:\Users\af40\Desktop\sharp\Yololo\obj\Debug\net7.0\ref\Yololo.dll

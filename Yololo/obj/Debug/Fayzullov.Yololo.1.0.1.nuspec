@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Fayzullov.Yololo</id>
+    <version>1.0.1</version>
+    <authors>Airat</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net7.0">
+        <dependency id="Microsoft.ML.OnnxRuntime" version="1.16.0" exclude="Build,Analyzers" />
+        <dependency id="SixLabors.Fonts" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="SixLabors.ImageSharp" version="3.0.2" exclude="Build,Analyzers" />
+        <dependency id="SixLabors.ImageSharp.Drawing" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Linq" version="4.3.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\af40\Desktop\sharp\Yololo\bin\Debug\net7.0\Yololo.dll" target="lib\net7.0\Yololo.dll" />
+  </files>
+</package>
