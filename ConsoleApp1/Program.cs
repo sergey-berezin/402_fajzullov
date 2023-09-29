@@ -29,12 +29,8 @@ namespace CnslApp
                     await sem_check.WaitAsync();
 
                     lines_table.AddRange(result.BoxesInfo.Select(tmp_obj => new OneLine(
-                        tmp_image,
-                        Convert.ToInt32(tmp_obj.Class),
-                        Convert.ToInt32(tmp_obj.XMin),
-                        Convert.ToInt32(tmp_obj.YMin),
-                        Convert.ToInt32(tmp_obj.XMax - tmp_obj.XMin),
-                        Convert.ToInt32(tmp_obj.YMax - tmp_obj.YMin)
+                        tmp_image, Convert.ToInt32(tmp_obj.Class), Convert.ToInt32(tmp_obj.XMin), Convert.ToInt32(tmp_obj.YMin),
+                        Convert.ToInt32(tmp_obj.XMax - tmp_obj.XMin), Convert.ToInt32(tmp_obj.YMax - tmp_obj.YMin)
                     )));
 
                     sem_check.Release();
@@ -46,22 +42,16 @@ namespace CnslApp
             });
 
             await Task.WhenAll(processingTasks);
-            InsertIntoTable(lines_table);
-        }
-        private static void InsertIntoTable(IEnumerable<OneLine> objects)
-        {
+            
             using (StreamWriter sw = File.CreateText("outp_table.csv"))
             {
                 sw.WriteLine("Imgname,Classnum,X,Y,W,H");
-                foreach (var obj in objects)
+                foreach (var obj in lines_table)
                 {
                     sw.WriteLine($"\"{obj.imgname}\",\"{obj.classnum}\",\"{obj.X}\",\"{obj.Y}\",\"{obj.W}\",\"{obj.H}\"");
                 }
             }
         }
     }
-
-    public record OneLine(string imgname, int classnum, int X, int Y, int W, int H)
-    {
-    }
+    public record OneLine(string imgname, int classnum, int X, int Y, int W, int H) {}
 }
