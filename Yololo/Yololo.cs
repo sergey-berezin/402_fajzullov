@@ -15,8 +15,7 @@ namespace Yolo_Sharp
 {
     public static class Program_Yolo
     {
-        public static CancellationTokenSource canc_token = new CancellationTokenSource();
-        public static async Task<YoloRet> WorkImage(Image<Rgb24> image)
+        public static async Task<YoloRet> WorkImage(Image<Rgb24> image, CancellationToken token)
         {
 
             //using var image = SixLabors.ImageSharp.Image.Load<Rgb24>(args.FirstOrDefault() ?? "chair.jpg");
