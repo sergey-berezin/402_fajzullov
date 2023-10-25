@@ -22,7 +22,7 @@ namespace CnslApp
                 {
                     var image = Image.Load<Rgb24>(tmp_image);
 
-                    var result = await Program_Yolo.WorkImage(image, cts.Token);
+                    var result = await Program_Yolo.WorkImageAsync(image, cts.Token);
 
                     Directory.CreateDirectory("results_test");
                     var path = $"results_test/{tmp_image}";
