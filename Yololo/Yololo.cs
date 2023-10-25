@@ -16,7 +16,7 @@ namespace Yolo_Sharp
     private static SemaphoreSlim SemaphoreCheck = new SemaphoreSlim(1, 1);
     public static class Program_Yolo
     {
-        public static async Task<YoloRet> WorkImage(Image<Rgb24> image, CancellationToken token)
+        public static async Task<YoloRet> WorkImageAsync(Image<Rgb24> image, CancellationToken token)
         {
 
             //using var image = SixLabors.ImageSharp.Image.Load<Rgb24>(args.FirstOrDefault() ?? "chair.jpg");
@@ -30,10 +30,7 @@ namespace Yolo_Sharp
 
             // создаю семафор
 
-            if (canc_token.IsCancellationRequested)
-            {
-                throw new TaskCanceledException();
-            }
+            canc_token.ThrowIfCancellationRequested();
 
                 //ассинхронный доступ к модели, установка или загрузка
                 //await SemaphoreCheck.WaitAsync();
