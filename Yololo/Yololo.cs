@@ -52,10 +52,7 @@ namespace Yolo_Sharp
                 SemaphoreCheck.Release();
             }
 
-            if (canc_token.IsCancellationRequested)
-            {
-                throw new TaskCanceledException();
-            }
+            canc_token.ThrowIfCancellationRequested();
 
             // Изменяем размер изображения до 416 x 416
             var resized = image.Clone(x =>
@@ -68,11 +65,8 @@ namespace Yolo_Sharp
             });
 
 
-            if (canc_token.IsCancellationRequested)
-            {
-                throw new TaskCanceledException();
-            }
-
+            canc_token.ThrowIfCancellationRequested();
+          
             // Перевод пикселов в тензор и нормализация
             var input = new DenseTensor<float>(new[] { 1, 3, TargetSize, TargetSize });
             resized.ProcessPixelRows(pa =>
@@ -89,10 +83,7 @@ namespace Yolo_Sharp
                 }
             });
 
-            if (canc_token.IsCancellationRequested)
-            {
-                throw new TaskCanceledException();
-            }
+            canc_token.ThrowIfCancellationRequested();
 
             // Подготавливаем входные данные нейросети. Имя input задано в файле модели
             var inputs = new List<NamedOnnxValue>
@@ -101,10 +92,7 @@ namespace Yolo_Sharp
             };
 
 
-            if (canc_token.IsCancellationRequested)
-            {
-                throw new TaskCanceledException();
-            }
+            canc_token.ThrowIfCancellationRequested();
 
             // Вычисляем предсказание нейросетью
             //using var session = new InferenceSession("tinyyolov2-8.onnx");
@@ -241,10 +229,7 @@ namespace Yolo_Sharp
             annotated.SaveAsJpeg("annotated.jpg");
 
 
-            if (canc_token.IsCancellationRequested)
-            {
-                throw new TaskCanceledException();
-            }
+            canc_token.ThrowIfCancellationRequested();
 
             // Убираем дубликаты
             for (int i = 0; i < objects.Count; i++)
