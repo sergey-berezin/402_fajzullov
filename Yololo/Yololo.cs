@@ -13,6 +13,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace Yolo_Sharp
 {
+    private static SemaphoreSlim SemaphoreCheck = new SemaphoreSlim(1, 1);
     public static class Program_Yolo
     {
         public static async Task<YoloRet> WorkImage(Image<Rgb24> image, CancellationToken token)
@@ -28,7 +29,6 @@ namespace Yolo_Sharp
             const int TargetSize = 416;
 
             // создаю семафор
-            SemaphoreSlim SemaphoreCheck = new SemaphoreSlim(1, 1);
 
             if (canc_token.IsCancellationRequested)
             {
@@ -36,7 +36,8 @@ namespace Yolo_Sharp
             }
 
                 //ассинхронный доступ к модели, установка или загрузка
-                await SemaphoreCheck.WaitAsync();
+                //await SemaphoreCheck.WaitAsync();
+            SemaphoreCheck.Wait();
             while (!canc_token.IsCancellationRequested && session == null) {
                 try
                 {
