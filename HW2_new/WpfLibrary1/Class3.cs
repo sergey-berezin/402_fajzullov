@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using ImgProcLib;
@@ -17,6 +17,7 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Microsoft.Windows.Themes;
+using System.Runtime.InteropServices;
 
 namespace ViewModel
 {
@@ -89,17 +90,27 @@ namespace ViewModel
         
         public BitmapSource Image { get; }   // Изображение объекта в формате BitmapSource
         public string Class { get; set; }   //  Класс обнаруженного объекта
-       
+
 
         private BitmapSource ImageToBitmapSource(Image<Rgb24> image)
         {
             int width = image.Width;
             int height = image.Height;
-            byte[] pixels = new byte[width * height * Unsafe.SizeOf<Rgb24>()];  
-            image.CopyPixelDataTo(pixels);   // копируем в массив пикселей
+            int pixelSize = Unsafe.SizeOf<Rgb24>();
+            byte[] pixels = new byte[width * height * pixelSize];
 
-            WriteableBitmap bitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Rgb24, null);
-            bitmap.WritePixels(new Int32Rect(0, 0, width, height), pixels, 3 * width, 0);
+            image.CopyPixelDataTo(MemoryMarshal.AsBytes(pixels.AsSpan())); // копируем в массив пикселей
+
+            WriteableBitmap bitmap = new WriteableBitmap(
+                width,
+                height,
+                96,
+                96,
+                PixelFormats.Rgb24,
+                null
+            );
+
+            bitmap.WritePixels(new Int32Rect(0, 0, width, height), pixels, pixelSize * width, 0);
 
             return bitmap;
         }
@@ -160,13 +171,13 @@ namespace ViewModel
 
         private readonly IUIServices Serv;   // методы для взаимодействия с пользовательским интерфейсом
 
-        private void OnSelectFolder(object arg)       // Открывает диалоговое окно для выбора папки
+        private void SelectFold(object arg)       // Открывает диалоговое окно для выбора папки
         {
             string? folderName = Serv.FindFOlder();
             if (folderName == null) { return; }
             SelectedFolder = folderName;
         }
-        public async Task OnRunModel(object arg)    // Запускает модель обработки изображений асинхронн
+        public async Task RunProg(object arg)    // Запускает модель обработки изображений асинхронн
         {
             DetectedImages.Clear();
             RaisePropertyChanged(nameof(DetectedImages));
@@ -308,8 +319,8 @@ namespace ViewModel
             
             this.Serv = uiServices;
 
-            SelectFolderCommand = new MainCommand(OnSelectFolder, x => !CheckActi);
-            RunModelCommand = new AsyncRelayCommand(OnRunModel, x => SelectedFolder != string.Empty && !CheckActi);
+            SelectFolderCommand = new MainCommand(SelectFold, x => !CheckActi);
+            RunModelCommand = new AsyncRelayCommand(RunProg, x => SelectedFolder != string.Empty && !CheckActi);
             RequestCancellationCommand = new MainCommand(OnRequestCancellation, x => CheckActi);
         }
     }
